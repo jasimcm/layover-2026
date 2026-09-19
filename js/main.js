@@ -16,14 +16,15 @@
   } catch (e) {}
 
   // The "cool flight" fun element: tap/click/Enter on the hero plane doodle
-  // sends it looping across the screen (CSS handles the actual path via
-  // vw/vh, so it scales the same way on phones and desktops). Purely
-  // decorative, so it fails silently and is a no-op under reduced motion.
+  // sends it gliding out and back in a smooth, water-like ripple (CSS
+  // handles the actual path via vw/vh, so it scales the same way on
+  // phones and desktops). Purely decorative, so it fails silently and is
+  // a no-op under reduced motion.
   try {
     var plane = document.querySelector('.plane-doodle');
     if (!plane) return;
     var inner = plane.querySelector('.plane-inner') || plane;
-    var FLY_MS = 2400;
+    var FLY_MS = 4000;
     var flyTimer = null;
 
     function flyLoop() {

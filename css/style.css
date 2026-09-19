@@ -105,18 +105,25 @@ section{padding-block:56px;}
 .hero-art .spark-blue{position:absolute;bottom:2%;right:2%;width:30px;}
 
 /* ---- the "cool flight" fun element: the plane swoops in on load, idles,
-   and on tap/click/Enter takes off on a big loop across the screen before
-   landing back in place. The loop lives on .plane-inner (not the outer
-   .plane-doodle) so it layers on top of the entrance/idle-float transform
-   instead of restarting it. vw/vh keep the loop's size proportional on
-   phones and desktops alike. ---- */
+   and on tap/click/Enter takes off on one big loop down across the hero and
+   ticket and back to its resting spot — the same shape as the flight path
+   sketched over the page: left across the top, down past the headline and
+   copy, around the bottom of the ticket, up the right side, and home. The
+   rotation at each stop is computed from the actual heading of that leg
+   (atan2 of the step, plus the 45deg the artwork is drawn at) so the nose
+   genuinely points the way it's flying instead of just banking for show.
+   The flow lives on .plane-inner (not the outer .plane-doodle) so it layers
+   on top of the entrance/idle-float transform instead of restarting it.
+   vw/vh keep it proportional on phones and desktops alike; linear timing
+   over evenly-spaced points keeps the pacing (and so the rotation, which
+   assumes even spacing) consistent instead of jerky. ---- */
 .plane-doodle{ animation: plane-fly-in 1.3s cubic-bezier(.22,.9,.32,1) both; }
 .plane-doodle:focus-visible{ outline:3px solid var(--blue); outline-offset:6px; border-radius:8px; }
 .plane-doodle.flying{ z-index:60; }
 .plane-inner{ display:block; transform-origin:50% 50%; }
 @media (prefers-reduced-motion: no-preference){
   .plane-doodle{ animation: plane-fly-in 1.3s cubic-bezier(.22,.9,.32,1) both, plane-float 4.6s ease-in-out 1.3s infinite; }
-  .plane-inner.flying{ animation: plane-loop 2.4s cubic-bezier(.45,.05,.35,1); }
+  .plane-inner.flying{ animation: plane-flow 4s linear; }
 }
 @keyframes plane-fly-in{
   0%{ transform:translate(-170px,130px) rotate(-22deg) scale(.7); opacity:0; }
@@ -128,14 +135,48 @@ section{padding-block:56px;}
   0%,100%{ transform:translateY(0) rotate(0deg); }
   50%{ transform:translateY(-9px) rotate(-3deg); }
 }
-@keyframes plane-loop{
-  0%   { transform:translate(0,0) rotate(0deg) scale(1); }
-  14%  { transform:translate(-14vw,8vh) rotate(-50deg) scale(1.08); }
-  30%  { transform:translate(-28vw,-4vh) rotate(-150deg) scale(1.12); }
-  48%  { transform:translate(-22vw,-22vh) rotate(-235deg) scale(1.08); }
-  66%  { transform:translate(-4vw,-16vh) rotate(-300deg) scale(1.03); }
-  84%  { transform:translate(5vw,0) rotate(-345deg) scale(1); }
-  100% { transform:translate(0,0) rotate(-360deg) scale(1); }
+/* Catmull-Rom-smoothed samples of the same loop (3x the original 12 anchor
+   points) so the curve itself is round instead of faceted, with rotation
+   unwrapped across the whole pass so it turns continuously in one
+   direction instead of snapping between keyframes. */
+@keyframes plane-flow{
+  0.0%   { transform:translate(0vw,0vh)      rotate(0deg); }
+  2.7%   { transform:translate(-5.7vw,0.8vh)  rotate(-147deg); }
+  5.3%   { transform:translate(-12.6vw,2.3vh) rotate(-148deg); }
+  8.0%   { transform:translate(-20vw,4vh)     rotate(-145deg); }
+  10.7%  { transform:translate(-28.4vw,5.5vh) rotate(-146deg); }
+  13.3%  { transform:translate(-37.4vw,7.3vh) rotate(-155deg); }
+  16.0%  { transform:translate(-45vw,10vh)    rotate(-171deg); }
+  18.7%  { transform:translate(-50.8vw,14.3vh) rotate(-185deg); }
+  21.3%  { transform:translate(-55.2vw,19.5vh) rotate(-198deg); }
+  24.0%  { transform:translate(-58vw,25vh)     rotate(-217deg); }
+  26.7%  { transform:translate(-58.8vw,30.7vh) rotate(-234deg); }
+  29.3%  { transform:translate(-57.9vw,36.6vh) rotate(-244deg); }
+  32.0%  { transform:translate(-56vw,42vh)     rotate(-252deg); }
+  34.7%  { transform:translate(-53.5vw,46.8vh) rotate(-264deg); }
+  37.3%  { transform:translate(-50vw,51.1vh)   rotate(-277deg); }
+  40.0%  { transform:translate(-45vw,55vh)     rotate(-288deg); }
+  42.7%  { transform:translate(-37.8vw,58.7vh) rotate(-295deg); }
+  45.3%  { transform:translate(-29.1vw,62vh)   rotate(-302deg); }
+  48.0%  { transform:translate(-20vw,64vh)     rotate(-311deg); }
+  50.7%  { transform:translate(-10.4vw,64.6vh) rotate(-319deg); }
+  53.3%  { transform:translate(-0.4vw,64vh)    rotate(-328deg); }
+  56.0%  { transform:translate(8vw,62vh)       rotate(-345deg); }
+  58.7%  { transform:translate(14.1vw,58.4vh)  rotate(-362deg); }
+  61.3%  { transform:translate(18.7vw,53.6vh)  rotate(-375deg); }
+  64.0%  { transform:translate(22vw,48vh)      rotate(-389deg); }
+  66.7%  { transform:translate(23.9vw,41.7vh)  rotate(-401deg); }
+  69.3%  { transform:translate(24.4vw,34.7vh)  rotate(-408deg); }
+  72.0%  { transform:translate(24vw,28vh)      rotate(-416deg); }
+  74.7%  { transform:translate(22.7vw,21.5vh)  rotate(-424deg); }
+  77.3%  { transform:translate(20.5vw,15.2vh)  rotate(-431deg); }
+  80.0%  { transform:translate(18vw,10vh)      rotate(-442deg); }
+  82.7%  { transform:translate(15.2vw,6.4vh)   rotate(-456deg); }
+  85.3%  { transform:translate(12.1vw,3.9vh)   rotate(-464deg); }
+  88.0%  { transform:translate(9vw,2vh)        rotate(-468deg); }
+  92.0%  { transform:translate(6.4vw,0.7vh)    rotate(-481deg); }
+  96.0%  { transform:translate(3.8vw,0vh)      rotate(-495deg); }
+  100.0% { transform:translate(0,0)            rotate(0deg); }
 }
 .plane-hint{
   position:absolute;top:-10px;right:6px;
