@@ -5,304 +5,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Sora:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#FFFFFF;
-    --bg-soft:#FAFAFC;
-    --ink:#12131A;
-    --ink-soft:#53566B;
-    --ink-faint:#9497AC;
-    --line:#E7E8F0;
-    --blue:#1E2EEA;
-    --blue-deep:#141E9E;
-    --navy:#0C1142;
-    --orange:#FF5B1E;
-    --orange-deep:#DE460E;
-    --sky:#8FBAEC;
-    --sky-deep:#3E6FB8;
-    --gold:#C68A2E;
-    --outline:#12131A;
-    --shadow-hard: 5px 5px 0 var(--outline);
-    color-scheme: light;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  /* LAYOVER is a committed light/paper design (matches the print poster) —
-     it intentionally ignores prefers-color-scheme and stays white. */
-
-  *{box-sizing:border-box;}
-  html,body{margin:0;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:"Sora",system-ui,-apple-system,"Segoe UI",sans-serif;
-    overflow-x:hidden;
-  }
-  img{max-width:100%;}
-  [hidden]{display:none!important;}
-  p{margin:0;line-height:1.65;}
-  a{color:inherit;}
-  .mono{font-family:"Space Mono",ui-monospace,monospace;}
-  .wrap{max-width:1320px;margin-inline:auto;padding-inline:max(24px, calc((100vw - 1320px)/2));}
-  section{padding-block:56px;}
-
-  /* ---- outlined display type (the LAYOVER treatment) ---- */
-  .out-text{
-    font-family:"Baloo 2",system-ui,sans-serif;
-    font-weight:800;
-    color:var(--blue);
-    -webkit-text-stroke: 3px var(--outline);
-    text-stroke: 3px var(--outline);
-    paint-order: stroke fill;
-    line-height:.95;
-    letter-spacing:.5px;
-    text-wrap:balance;
-    margin:0;
-  }
-  .solid-text{
-    font-family:"Baloo 2",system-ui,sans-serif;
-    color:var(--blue);
-    line-height:1.02;
-    margin:0;
-  }
-
-  .eyebrow{
-    font-family:"Space Mono";font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--orange-deep);font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:12px;
-  }
-  .eyebrow::before{content:"";width:20px;height:2px;background:var(--orange);}
-
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;font-family:"Sora";font-weight:700;font-size:.94rem;
-    padding:12px 22px;border-radius:999px;border:2.5px solid var(--outline);text-decoration:none;cursor:pointer;
-    box-shadow:3px 3px 0 var(--outline);transition:transform .12s ease, box-shadow .12s ease;background:var(--bg);color:var(--ink);
-  }
-  .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--outline);}
-  .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--outline);}
-  .btn:focus-visible{outline:3px solid var(--blue);outline-offset:3px;}
-  .btn-primary{background:var(--orange);color:#fff;border-color:var(--outline);}
-  .btn-ghost{background:var(--bg);}
-
-  /* ---------- nav ---------- */
-  .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(8px);border-bottom:2px solid var(--line);}
-  .nav-row{display:flex;align-items:center;justify-content:space-between;padding-block:12px;gap:16px;}
-  .brand{font-family:"Baloo 2";font-weight:700;font-size:1.4rem;color:var(--blue);}
-  .nav-links{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:.9rem;font-weight:600;}
-  .nav-links a{text-decoration:none;color:var(--ink-soft);border-bottom:2px solid transparent;padding-block:3px;}
-  .nav-links a:hover{color:var(--blue);border-color:var(--orange);}
-
-  /* ---------- doodles ---------- */
-  .doodle svg{display:block;overflow:visible;}
-
-  /* ---------- hero ---------- */
-  .hero{padding-block:40px 0;position:relative;}
-  .partner-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:34px;}
-  .partner{display:flex;align-items:center;gap:10px;}
-  .partner .avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);flex:none;border:2px solid var(--outline);}
-  .partner .name{font-family:"Baloo 2";font-weight:700;font-size:1.05rem;color:var(--gold);letter-spacing:.3px;}
-  .partner.right{text-align:right;}
-  .partner.right .name{color:var(--blue);font-size:1.1rem;}
-  .partner.right .sub{font-family:"Baloo 2";font-weight:700;color:var(--blue);font-size:.62rem;letter-spacing:.15em;margin-top:-4px;display:block;}
-
-  .hero-main{position:relative;display:grid;grid-template-columns:1.5fr .5fr;gap:24px;align-items:start;margin-bottom:44px;}
-  .hero-copy h1.out-text{font-size:clamp(3.6rem,11vw,7.2rem);}
-  .hero-copy .lead{margin-top:6px;}
-  .hero-copy .lead .solid-text{display:block;font-size:clamp(1.7rem,4.2vw,2.5rem);}
-  .hero-copy .lead .solid-text.big{font-weight:800;font-size:clamp(2.1rem,5.2vw,3rem);}
-  .hero-copy .desc{margin-top:18px;max-width:48ch;color:var(--ink-soft);font-size:1.05rem;}
-  .hero-art{position:relative;min-height:160px;padding-top:12px;}
-  .hero-art .plane-doodle{position:absolute;top:0;right:0;width:min(260px, 90%);}
-  .hero-art .spark-orange{position:absolute;top:-14px;left:2%;width:40px;}
-  .hero-art .spark-blue{position:absolute;bottom:2%;right:2%;width:30px;}
-
-  /* ---------- ticket ---------- */
-  .ticket{
-    position:relative;background:var(--bg);border:6px solid var(--orange);border-radius:30px;
-    box-shadow:0 24px 46px -22px rgba(12,17,66,.28);padding:0;margin-bottom:34px;
-  }
-  .ticket-grid{display:grid;grid-template-columns:.78fr 1.22fr;}
-  .ticket-left{padding:28px 26px;display:flex;flex-direction:column;gap:16px;border-right:2.5px dashed var(--line);}
-  .field-tags{display:flex;flex-direction:column;gap:14px;}
-  .field-tag{
-    display:inline-flex;align-items:center;justify-content:space-between;gap:14px;
-    background:var(--bg);border:2.5px solid var(--outline);color:var(--ink);
-    font-family:"Space Mono";font-weight:700;font-size:.92rem;letter-spacing:.12em;text-transform:uppercase;
-    padding:9px 16px;border-radius:8px;box-shadow:3px 4px 0 var(--outline);width:fit-content;transform:rotate(-1.2deg);
-  }
-  .field-tag:nth-child(2){transform:rotate(1.1deg);}
-  .field-tag .fval{color:var(--blue);letter-spacing:.02em;}
-  .ticket-right{padding:26px 30px 34px;position:relative;}
-  .bars-row{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
-  .date-bar{
-    background:var(--orange);color:#fff;font-family:"Baloo 2";font-weight:700;font-size:1.15rem;
-    padding:9px 18px;border-radius:8px;display:inline-block;transform:rotate(-1.4deg);width:fit-content;
-  }
-  .date-bar:nth-child(2){transform:rotate(1deg);}
-  .route-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap;}
-  .route-row .rcity{font-family:"Space Mono";font-weight:700;}
-  .route-row .rcity .code{font-size:1.5rem;color:var(--ink);display:block;}
-  .route-row .rcity .place{font-size:.62rem;color:var(--ink-faint);letter-spacing:.1em;text-transform:uppercase;font-weight:400;}
-  .route-row .rline{flex:1;min-width:70px;position:relative;height:2px;background:repeating-linear-gradient(to right, var(--ink) 0 7px, transparent 7px 13px);}
-  .route-row .rline .doodle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;}
-  .venue-line{font-size:.92rem;color:var(--ink-soft);margin-bottom:20px;}
-  .venue-line b{color:var(--ink);}
-  .apply-pill{display:inline-flex;align-items:center;gap:8px;background:var(--bg-soft);border:2px solid var(--line);border-radius:999px;padding:8px 16px 8px 8px;font-size:.86rem;font-weight:700;color:var(--blue);}
-  .apply-pill .chip{background:var(--ink);color:#fff;font-family:"Space Mono";font-size:.62rem;font-weight:700;padding:4px 8px;border-radius:6px;letter-spacing:.05em;}
-  .qr{margin-top:auto;}
-  .qr svg{width:96px;height:96px;}
-
-  .ribbon{position:relative;display:inline-block;transform:rotate(-3deg);font-family:"Baloo 2";font-weight:700;color:#fff;text-align:center;box-shadow:3px 4px 0 rgba(12,17,66,.25);border-radius:6px;overflow:hidden;}
-  .ribbon .r-top{background:var(--orange);padding:6px 16px;font-size:.98rem;}
-  .ribbon .r-bottom{background:var(--navy);padding:6px 16px;font-size:.98rem;}
-
-  .skyline-swatch{width:96px;height:112px;border-radius:14px;background:linear-gradient(180deg,var(--blue) 0%, var(--blue-deep) 100%);position:relative;overflow:hidden;border:2px solid var(--outline);flex:none;}
-  .skyline-swatch svg{position:absolute;bottom:0;left:0;width:100%;}
-
-  .ticket-corner{display:flex;align-items:flex-end;justify-content:flex-end;gap:14px;margin-top:24px;}
-
-  .doodle-cloud-hero{position:absolute;left:-14px;bottom:-30px;width:92px;}
-
-  /* ---------- flight strip (stats) ---------- */
-  .strip{background:var(--orange);border-top:2.5px solid var(--outline);border-bottom:2.5px solid var(--outline);}
-  .strip .wrap{display:flex;overflow-x:auto;}
-  .strip .cell{flex:1;min-width:140px;text-align:center;padding:16px 18px;border-right:2px dashed rgba(255,255,255,.55);}
-  .strip .cell:last-child{border-right:none;}
-  .strip .cell .num{display:block;font-family:"Baloo 2";font-weight:700;font-size:1.4rem;color:#fff;}
-  .strip .cell .lbl{display:block;font-family:"Space Mono";font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#FFE3D6;margin-top:3px;}
-
-  /* ---------- section heads ---------- */
-  .sec-head{max-width:60ch;margin-bottom:36px;}
-  .sec-head h2{font-size:clamp(1.9rem,4vw,2.5rem);}
-  .sec-head p{margin-top:12px;color:var(--ink-soft);font-size:1rem;}
-
-  /* ---------- overview ---------- */
-  .overview-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;}
-  .overview-grid p + p{margin-top:14px;}
-  .overview-grid p{color:var(--ink-soft);font-size:1rem;}
-  .quote-card{background:var(--bg);border:2.5px solid var(--blue);border-radius:18px;padding:24px;box-shadow:var(--shadow-hard);}
-  .quote-card .mark{font-family:"Baloo 2";font-size:2.4rem;color:var(--orange);display:block;line-height:1;margin-bottom:4px;}
-  .quote-card p{color:var(--ink);font-size:1.04rem;font-weight:500;}
-  .quote-card .who{margin-top:12px;font-family:"Space Mono";font-size:.68rem;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;}
-
-  /* ---------- build tags ---------- */
-  .tag-grid{display:flex;flex-wrap:wrap;gap:16px 18px;}
-  .tag{background:var(--bg);border:2.5px solid var(--blue);border-radius:12px;padding:13px 18px;font-weight:600;font-size:.92rem;max-width:230px;box-shadow:4px 4px 0 var(--blue);}
-  .tag:nth-child(3n+2){border-color:var(--orange);box-shadow:4px 4px 0 var(--orange);}
-  .tag:nth-child(3n){border-color:var(--navy);box-shadow:4px 4px 0 var(--navy);}
-  .tag:nth-child(odd){transform:rotate(-1deg);}
-  .tag:nth-child(even){transform:rotate(1deg);}
-  .tag .kicker{display:block;font-family:"Space Mono";font-size:.6rem;color:var(--orange-deep);letter-spacing:.1em;margin-bottom:3px;}
-  .tag.spotlight{background:var(--blue);color:#fff;border-color:var(--outline);box-shadow:4px 4px 0 var(--outline);}
-  .tag.spotlight .kicker{color:#CBD4FF;}
-  .must-build{margin-top:24px;font-family:"Space Mono";font-size:.84rem;color:var(--ink-soft);}
-  .must-build b{color:var(--ink);}
-
-  /* ---------- format board ---------- */
-  .format-board{border:2.5px solid var(--outline);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-hard);}
-  .format-row{display:grid;grid-template-columns:1fr 1.6fr;gap:12px;padding:15px 24px;border-bottom:2px dashed var(--line);align-items:baseline;}
-  .format-row:last-child{border-bottom:none;}
-  .format-row:nth-child(even){background:var(--bg-soft);}
-  .format-row .k{font-family:"Space Mono";font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
-  .format-row .v{font-family:"Baloo 2";font-weight:600;font-size:1rem;color:var(--ink);}
-  .format-row .v.mono{font-family:"Space Mono";font-weight:700;color:var(--blue);}
-
-  /* ---------- flow ---------- */
-  .flow-track{position:relative;padding-top:16px;}
-  .flow-line{position:absolute;top:29px;left:0;right:0;height:2px;background:repeating-linear-gradient(to right, var(--ink-faint) 0 8px, transparent 8px 16px);}
-  .flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative;}
-  .flow-step{display:flex;flex-direction:column;align-items:flex-start;gap:10px;}
-  .flow-node{width:24px;height:24px;border-radius:50%;background:var(--orange);border:3px solid var(--bg);box-shadow:0 0 0 2.5px var(--outline);position:relative;z-index:2;}
-  .flow-step .time{font-family:"Space Mono";font-weight:700;color:var(--blue);font-size:.92rem;}
-  .flow-step .desc{font-size:.9rem;color:var(--ink-soft);}
-
-  /* ---------- judging ---------- */
-  .judge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:44px;}
-  .judge-card{background:var(--bg);border:2.5px solid var(--outline);border-radius:16px;padding:20px;box-shadow:var(--shadow-hard);}
-  .judge-card .idx{font-family:"Space Mono";color:var(--orange-deep);font-weight:700;font-size:.76rem;letter-spacing:.08em;}
-  .judge-card h3{font-family:"Baloo 2";font-size:1.08rem;margin-top:8px;}
-  .judge-card p{margin-top:8px;color:var(--ink-soft);font-size:.87rem;}
-  .judge-card .when{margin-top:12px;font-family:"Space Mono";font-size:.72rem;color:var(--blue);font-weight:700;}
-
-  .criteria{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
-  .bars{display:flex;flex-direction:column;gap:14px;}
-  .bar-row{display:grid;grid-template-columns:150px 1fr 36px;align-items:center;gap:12px;}
-  .bar-row .name{font-size:.86rem;font-weight:600;color:var(--ink);}
-  .bar-track{height:14px;background:var(--bg-soft);border:2px solid var(--outline);border-radius:8px;overflow:hidden;}
-  .bar-fill{height:100%;background:var(--orange);}
-  .bar-row .val{font-family:"Space Mono";font-weight:700;color:var(--blue);text-align:right;font-variant-numeric:tabular-nums;}
-  .criteria-total{margin-top:10px;padding-top:14px;border-top:2px dashed var(--line);display:flex;justify-content:space-between;font-family:"Space Mono";font-weight:700;color:var(--ink);}
-  .note-card{background:var(--bg-soft);border:2px solid var(--line);border-radius:16px;padding:20px 22px;font-size:.92rem;color:var(--ink);}
-  .note-card b{color:var(--blue);}
-
-  /* ---------- prizes ---------- */
-  .prize-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;}
-  .prize-card{background:var(--bg);border:5px solid var(--orange);border-radius:24px;padding:30px;position:relative;box-shadow:0 20px 40px -22px rgba(12,17,66,.28);display:flex;flex-direction:column;gap:14px;}
-  .prize-card .out-text{font-size:clamp(2rem,4.4vw,2.8rem);}
-  .prize-card p{color:var(--ink-soft);max-width:34ch;}
-  .prize-card .foot-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px;}
-  .side-card{background:var(--bg);border:2.5px solid var(--blue);border-radius:18px;padding:26px;box-shadow:var(--shadow-hard);}
-  .side-card h3{font-family:"Baloo 2";font-size:1.12rem;margin-bottom:10px;}
-  .side-card p{color:var(--ink-soft);font-size:.93rem;}
-
-  /* ---------- milestones ---------- */
-  .milestones{display:flex;flex-direction:column;}
-  .milestone{display:grid;grid-template-columns:126px 22px 1fr;gap:18px;padding-block:15px;}
-  .milestone .mdate{font-family:"Space Mono";font-weight:700;color:var(--blue);font-size:.85rem;padding-top:2px;}
-  .milestone .mline{display:flex;flex-direction:column;align-items:center;}
-  .milestone .mdot{width:13px;height:13px;border-radius:50%;background:var(--orange);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--outline);flex:none;margin-top:4px;}
-  .milestone .mstem{flex:1;width:2px;background:var(--line);margin-top:2px;}
-  .milestone:last-child .mstem{display:none;}
-  .milestone .mtext b{display:block;color:var(--ink);font-size:.97rem;margin-bottom:2px;}
-  .milestone .mtext span{color:var(--ink-soft);font-size:.87rem;}
-  .draft-note{margin-top:16px;font-family:"Space Mono";font-size:.7rem;color:var(--ink-faint);}
-
-  /* ---------- footer ---------- */
-  .footer{background:var(--bg-soft);border-top:2.5px solid var(--line);padding-block:56px 30px;margin-top:20px;position:relative;overflow:hidden;}
-  .footer .wrap{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;}
-  .footer .out-text{font-size:clamp(2.1rem,6vw,3.4rem);}
-  .footer .sub{color:var(--ink-soft);max-width:44ch;}
-  .footer .cta-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-block:8px 30px;}
-  .footer .badges{display:flex;justify-content:center;gap:36px;flex-wrap:wrap;padding-block:24px;border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);width:100%;margin-bottom:18px;}
-  .footer .bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem;color:var(--ink-faint);width:100%;}
-  .footer .bottom a{color:var(--orange-deep);text-decoration:none;font-weight:700;}
-  .footer .fcloud{position:absolute;left:2%;bottom:-6%;width:80px;opacity:.9;}
-  .footer .fspark{position:absolute;right:4%;top:6%;width:34px;}
-
-  .reveal-init{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease;}
-  .reveal{opacity:1;transform:none;}
-
-  /* ---------- responsive ---------- */
-  @media (max-width: 860px){
-    .nav-links{display:none;}
-    .hero-main{grid-template-columns:1fr;}
-    .hero-art{
-      position:static;order:0;min-height:auto;padding-top:0;
-      display:flex;align-items:center;justify-content:center;gap:12px;margin:18px 0 6px;
-    }
-    .hero-art .plane-doodle,.hero-art .spark-orange,.hero-art .spark-blue{position:static;inset:auto;transform:none;}
-    .hero-art .plane-doodle{width:130px;order:2;}
-    .hero-art .spark-orange{width:26px;order:1;}
-    .hero-art .spark-blue{width:22px;order:3;}
-    .ticket-grid{grid-template-columns:1fr;}
-    .ticket-left{border-right:none;border-bottom:2.5px dashed var(--line);}
-    .ticket-corner{position:static;margin-top:16px;justify-content:flex-start;}
-    .doodle-cloud-hero{display:none;}
-    .overview-grid{grid-template-columns:1fr;}
-    .judge-grid{grid-template-columns:repeat(2,1fr);}
-    .criteria{grid-template-columns:1fr;}
-    .prize-grid{grid-template-columns:1fr;}
-    .flow-steps{grid-template-columns:repeat(2,1fr);row-gap:30px;}
-    .flow-line{display:none;}
-  }
-  @media (max-width: 560px){
-    .judge-grid{grid-template-columns:1fr;}
-    .strip .cell{min-width:120px;}
-    .milestone{grid-template-columns:96px 18px 1fr;gap:10px;}
-    .bar-row{grid-template-columns:104px 1fr 32px;}
-    .partner-row{justify-content:center;text-align:center;}
-    .partner.right{text-align:center;}
-  }
-</style>
+<link rel="stylesheet" href="css/style.css">
 
 <div class="nav">
   <div class="wrap nav-row">
@@ -323,12 +26,7 @@
   <section class="hero wrap" id="top">
     <div class="partner-row">
       <div class="partner">
-        <div class="avatar"></div>
-        <div class="name">THE VISA GUY</div>
-      </div>
-      <div class="partner right">
-        <span class="sub">TINKERSPACE</span>
-        <div class="name">CALICUT</div>
+        <img class="partner-logo" src="assets/logos/visa-guy.webp" alt="The Visa Guy" style="height:34px;">
       </div>
     </div>
 
@@ -336,25 +34,26 @@
       <div class="hero-copy">
         <h1 class="out-text">LAYOVER</h1>
         <div class="lead">
-          <span class="solid-text">A travel</span>
-          <span class="solid-text big">hackathon</span>
+          <span class="solid-text">Build around</span>
+          <span class="solid-text big">travel.</span>
         </div>
-        <p class="desc">200 students, one overnight build, zero fixed problem statements. Make something around travel &mdash; useful, weird, or gloriously pointless &mdash; and demo it by sunrise.</p>
+        <p class="desc">200 students, one overnight build, zero fixed problem statements. Make something around travel (useful, weird, or gloriously pointless) and demo it by sunrise.</p>
       </div>
       <div class="hero-art">
         <span class="doodle spark-orange" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 0 15 9 24 12 15 15 12 24 9 15 0 12 9 9Z" fill="var(--orange)" stroke="var(--outline)" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 2 12 22" stroke="var(--outline)" stroke-width=".8" opacity=".35"/></svg>
         </span>
-        <span class="doodle plane-doodle" aria-hidden="true">
-          <svg viewBox="0 0 120 90" fill="none">
-            <g transform="rotate(-18 60 45)">
-              <path d="M14 58 L70 58 L96 34 L108 34 L86 58 L108 58 L98 68 L70 68 L58 82 L46 82 L54 68 L14 68 Z" fill="#fff" stroke="var(--outline)" stroke-width="3" stroke-linejoin="round"/>
-              <circle cx="34" cy="63" r="3.2" fill="var(--orange)"/>
-              <circle cx="46" cy="63" r="3.2" fill="var(--orange)"/>
-              <circle cx="58" cy="63" r="3.2" fill="var(--blue)"/>
-              <path d="M14 63 H70" stroke="var(--orange)" stroke-width="2.5"/>
-            </g>
-          </svg>
+        <span class="doodle plane-doodle" role="button" tabindex="0" aria-label="Paper plane doodle, tap to send it looping across the screen">
+          <span class="plane-inner">
+            <svg viewBox="0 0 24 24" fill="none">
+              <g transform="rotate(45 12 12)">
+                <path d="M21,16v-2L13,9V3.5C13,2.67,12.33,2,11.5,2S10,2.67,10,3.5V9l-8,5v2l8-2.5V19l-2.5,1.5V22l4-1l4,1v-1.5L13,19v-5.5L21,16z" fill="#fff" stroke="var(--outline)" stroke-width=".9" stroke-linejoin="round" stroke-linecap="round"/>
+                <circle cx="11.5" cy="9.3" r=".55" fill="var(--orange)"/>
+                <circle cx="11.5" cy="12.6" r=".55" fill="var(--blue)"/>
+              </g>
+            </svg>
+          </span>
+          <span class="plane-hint mono" aria-hidden="true">tap it &#9992;</span>
         </span>
         <span class="doodle spark-blue" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 0 15 9 24 12 15 15 12 24 9 15 0 12 9 9Z" fill="var(--blue)" stroke="var(--outline)" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -396,7 +95,7 @@
             <div class="rline"><span class="doodle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21,16v-2L13,9V3.5C13,2.67,12.33,2,11.5,2S10,2.67,10,3.5V9l-8,5v2l8-2.5V19l-2.5,1.5V22l4-1l4,1v-1.5L13,19v-5.5L21,16z" fill="var(--outline)" transform="rotate(90 12 12)"/></svg></span></div>
             <div class="rcity"><span class="code">DXB</span><span class="place">Dubai</span></div>
           </div>
-          <div class="venue-line">Venue &mdash; <b>TinkerSpace Calicut</b></div>
+          <div class="venue-line">Venue: <b>TinkerSpace Calicut</b></div>
           <span class="apply-pill"><span class="chip">TinkerHub</span> Apply via App</span>
 
           <div class="ticket-corner">
@@ -431,11 +130,11 @@
 
   <section class="strip" aria-label="Quick facts">
     <div class="wrap">
-      <div class="cell"><span class="num">200</span><span class="lbl">Students</span></div>
-      <div class="cell"><span class="num">6PM&ndash;6AM</span><span class="lbl">Overnight build</span></div>
-      <div class="cell"><span class="num">&le;2</span><span class="lbl">Per team</span></div>
-      <div class="cell"><span class="num">FREE</span><span class="lbl">Entry, always</span></div>
-      <div class="cell"><span class="num">DXB</span><span class="lbl">Grand prize dest.</span></div>
+      <div class="cell"><span class="num">200</span><span class="lbl">Students</span><span class="sub">Building overnight</span></div>
+      <div class="cell"><span class="num">6PM&ndash;6AM</span><span class="lbl">Overnight build</span><span class="sub">One straight run</span></div>
+      <div class="cell"><span class="num">&le;2</span><span class="lbl">Per team</span><span class="sub">Solo or duos</span></div>
+      <div class="cell"><span class="num">FREE</span><span class="lbl">Entry, always</span><span class="sub">No fees, ever</span></div>
+      <div class="cell"><span class="num">DXB</span><span class="lbl">Grand prize dest.</span><span class="sub">Winner's trip</span></div>
     </div>
   </section>
 
@@ -446,12 +145,12 @@
     </div>
     <div class="overview-grid">
       <div>
-        <p>LAYOVER is an overnight student hackathon at TinkerSpace Calicut, bringing together up to 200 students to build something &mdash; anything &mdash; around the theme of travel. Software, hardware, AI, games, experiments, or something completely unnecessary but fun.</p>
+        <p>LAYOVER is an overnight student hackathon at TinkerSpace Calicut, bringing together up to 200 students to build something, anything, around the theme of travel. Software, hardware, AI, games, experiments, or something completely unnecessary but fun.</p>
         <p>There's no requirement to solve a real-world problem or become a business. The only expectation: something gets built and demonstrated by the end of the night. Teams check in from 5:00 PM, build from 6:00 PM straight through to 6:00 AM, and present to judges as the sun comes up.</p>
       </div>
       <div class="quote-card">
         <span class="mark">&ldquo;</span>
-        <p>A weird travel-themed gadget can score just as high as a practical travel app &mdash; as long as travel is the actual point of the build, not a word tacked on afterward.</p>
+        <p>A weird travel-themed gadget can score just as high as a practical travel app, as long as travel is the actual point of the build, not a word tacked on afterward.</p>
         <div class="who">On the &ldquo;Travel Connection&rdquo; judging criterion</div>
       </div>
     </div>
@@ -461,7 +160,7 @@
     <div class="sec-head">
       <div class="eyebrow">What can you build</div>
       <h2 class="solid-text">No fixed problem statement, no tech restrictions.</h2>
-      <p>Pick a lane below, ignore all of them, or invent your own &mdash; as long as travel is genuinely at the core of it.</p>
+      <p>Pick a lane below, ignore all of them, or invent your own, as long as travel is genuinely at the core of it.</p>
     </div>
     <div class="tag-grid">
       <div class="tag"><span class="kicker">01</span>Travel utilities &amp; tools</div>
@@ -491,9 +190,8 @@
       <div class="format-row"><div class="k">Participants</div><div class="v">Up to 200 students</div></div>
       <div class="format-row"><div class="k">Team format</div><div class="v">Individual or max 2 members</div></div>
       <div class="format-row"><div class="k">Build</div><div class="v">Hardware / Software / AI</div></div>
-      <div class="format-row"><div class="k">Judges &amp; mentors</div><div class="v">~30 &mdash; volunteers, mentors &amp; organizers</div></div>
       <div class="format-row"><div class="k">Participation</div><div class="v">Free</div></div>
-      <div class="format-row"><div class="k">Prize</div><div class="v">One overall winner &mdash; Dubai trip, full team covered</div></div>
+      <div class="format-row"><div class="k">Prize</div><div class="v">One overall winner: Dubai trip, full team covered</div></div>
     </div>
     <div class="draft-note">Headcounts are a working estimate and may shift as registrations close.</div>
   </section>
@@ -507,7 +205,7 @@
       <div class="flow-line" aria-hidden="true"></div>
       <div class="flow-steps">
         <div class="flow-step"><div class="flow-node"></div><div class="time">5:00 PM</div><div class="desc">Check-in &amp; setup at TinkerSpace Calicut.</div></div>
-        <div class="flow-step"><div class="flow-node"></div><div class="time">6:00 PM</div><div class="desc">Hackathon begins &mdash; teams start building.</div></div>
+        <div class="flow-step"><div class="flow-node"></div><div class="time">6:00 PM</div><div class="desc">Hackathon begins: teams start building.</div></div>
         <div class="flow-step"><div class="flow-node"></div><div class="time">6 PM&ndash;6 AM</div><div class="desc">Teams build through the night; mentors circulate.</div></div>
         <div class="flow-step"><div class="flow-node" style="background:var(--blue);"></div><div class="time">7:00 AM</div><div class="desc">Judging &amp; final presentations begin.</div></div>
       </div>
@@ -518,7 +216,7 @@
     <div class="sec-head">
       <div class="eyebrow">Judging structure</div>
       <h2 class="solid-text">Two rounds, so every team gets seen.</h2>
-      <p>Judging happens in two rounds to make sure nobody runs out of time &mdash; and every project gets in front of a judge at least once.</p>
+      <p>Judging happens in two rounds to make sure nobody runs out of time, and every project gets in front of a judge at least once.</p>
     </div>
     <div class="judge-grid">
       <div class="judge-card">
@@ -542,7 +240,7 @@
       <div class="judge-card">
         <div class="idx">FINAL CALL</div>
         <h3>Deliberation &amp; prize</h3>
-        <p>Judges deliberate and announce the one overall winner &mdash; and the Dubai trip.</p>
+        <p>Judges deliberate and announce the one overall winner, plus the Dubai trip.</p>
         <div class="when">9:00&ndash;9:30 AM</div>
       </div>
     </div>
@@ -560,7 +258,7 @@
         <div class="criteria-total"><span>Total</span><span>50 marks</span></div>
       </div>
       <div class="note-card">
-        <b>Travel Connection isn't about usefulness.</b> Since projects don't need to solve a real travel problem, this criterion checks whether travel is genuinely core to the idea &mdash; even if the build itself is silly or "useless." The overall focus stays on what you build and demonstrate, never on business potential.
+        <b>Travel Connection isn't about usefulness.</b> Since projects don't need to solve a real travel problem, this criterion checks whether travel is genuinely core to the idea, even if the build itself is silly or "useless." The overall focus stays on what you build and demonstrate, never on business potential.
       </div>
     </div>
   </section>
@@ -574,7 +272,7 @@
       <div class="prize-card">
         <span class="eyebrow" style="margin-bottom:0;">Grand prize</span>
         <h3 class="out-text">Dubai Trip</h3>
-        <p>For the winning team &mdash; top 2 people, fully covered, no fine print.</p>
+        <p>For the winning team: top 2 people, fully covered, no fine print.</p>
         <div class="foot-row">
           <div class="route-row" style="flex:1;margin:0;">
             <div class="rcity"><span class="code">CCJ</span><span class="place">Kozhikode</span></div>
@@ -585,7 +283,7 @@
       </div>
       <div class="side-card">
         <h3>Beyond the trophy</h3>
-        <p>Standout participants &mdash; picked for creativity, technical skill, or sheer ability to build &mdash; may be considered for internship opportunities and referrals, even outside the winning team. Bring your best work regardless of the scoreboard.</p>
+        <p>Standout participants, picked for creativity, technical skill, or sheer ability to build, may be considered for internship opportunities and referrals, even outside the winning team. Bring your best work regardless of the scoreboard.</p>
       </div>
     </div>
   </section>
@@ -596,15 +294,13 @@
       <h2 class="solid-text">What happens before the 10th.</h2>
     </div>
     <div class="milestones">
-      <div class="milestone"><div class="mdate">19 Sep</div><div class="mline"><div class="mdot"></div><div class="mstem"></div></div><div class="mtext"><b>First poster goes live</b><span>Promotion phase kicks off across socials and colleges.</span></div></div>
-      <div class="milestone"><div class="mdate">19 Sep &ndash; 6 Oct</div><div class="mline"><div class="mdot"></div><div class="mstem"></div></div><div class="mtext"><b>Promotion phase</b><span>Social media, community outreach, and college visits.</span></div></div>
+      <div class="milestone"><div class="mdate">19 Sep</div><div class="mline"><div class="mdot"></div><div class="mstem"></div></div><div class="mtext"><b>Registrations open</b><span>First poster goes live. Apply anytime via the TinkerHub app.</span></div></div>
       <div class="milestone"><div class="mdate">6 Oct</div><div class="mline"><div class="mdot"></div><div class="mstem"></div></div><div class="mtext"><b>Registrations close</b><span>Last call to apply via the TinkerHub app.</span></div></div>
       <div class="milestone"><div class="mdate">7 Oct</div><div class="mline"><div class="mdot"></div><div class="mstem"></div></div><div class="mtext"><b>Shortlisting &amp; agenda sent</b><span>Confirmed participants get the full run-of-night.</span></div></div>
       <div class="milestone"><div class="mdate">10 Oct, 5 PM</div><div class="mline"><div class="mdot" style="background:var(--blue);"></div><div class="mstem"></div></div><div class="mtext"><b>Check-in &amp; hackathon</b><span>Doors open, building starts at 6 PM.</span></div></div>
       <div class="milestone"><div class="mdate">11 Oct, 7&ndash;9:30 AM</div><div class="mline"><div class="mdot" style="background:var(--blue);"></div><div class="mstem"></div></div><div class="mtext"><b>Judging &amp; prize</b><span>Two rounds, one winner, one Dubai trip.</span></div></div>
       <div class="milestone"><div class="mdate">25 Oct</div><div class="mline"><div class="mdot"></div></div><div class="mtext"><b>Post-event</b><span>Winner recap, after-movie, and internship outreach to standout builders.</span></div></div>
     </div>
-    <div class="draft-note">Dates above are a draft structure pending final confirmation by the organizing team.</div>
   </section>
 </main>
 
@@ -627,9 +323,9 @@
       <a class="btn btn-ghost" href="https://instagram.com/tinkerspace.calicut">@tinkerspace.calicut</a>
     </div>
     <div class="badges">
-      <div class="partner"><div class="avatar"></div><div class="name">THE VISA GUY</div></div>
-      <div class="partner"><div class="name" style="color:var(--orange-deep);">TINKERHUB</div></div>
-      <div class="partner right"><span class="sub">TINKERSPACE</span><div class="name">CALICUT</div></div>
+      <div class="partner"><img class="partner-logo" src="assets/logos/visa-guy.webp" alt="The Visa Guy" style="height:28px;"></div>
+      <div class="partner"><img class="partner-logo" src="assets/logos/tinkerhub.png" alt="TinkerHub" style="height:20px;"></div>
+      <div class="partner right"><img class="partner-logo" src="assets/logos/tinkerspace-calicut.png" alt="TinkerSpace Calicut" style="height:34px;"></div>
     </div>
     <div class="bottom">
       <span>LAYOVER 2026 &middot; TinkerSpace Calicut, Kozhikode</span>
@@ -638,21 +334,4 @@
   </div>
 </footer>
 
-<script>
-  (function(){
-    try{
-      var mq = window.matchMedia('(prefers-reduced-motion: no-preference)');
-      if(mq.matches && 'IntersectionObserver' in window){
-        var els = document.querySelectorAll('[data-reveal]');
-        var obs = new IntersectionObserver(function(entries){
-          entries.forEach(function(e){
-            if(e.isIntersecting){ e.target.classList.add('reveal'); obs.unobserve(e.target); }
-          });
-        }, {threshold:.15});
-        els.forEach(function(el){ obs.observe(el); });
-      } else {
-        document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('reveal'); });
-      }
-    }catch(e){}
-  })();
-</script>
+<script src="js/main.js" defer></script>
