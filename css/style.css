@@ -380,6 +380,4 @@ section{padding-block:56px;}
   .strip .wrap{grid-template-columns:repeat(2,1fr);}
   .milestone{grid-template-columns:96px 18px 1fr;gap:10px;}
   .bar-row{grid-template-columns:104px 1fr 32px;}
-  .partner-row{justify-content:center;text-align:center;}
-  .partner.right{text-align:center;}
 }
