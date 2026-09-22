@@ -222,7 +222,7 @@ section{padding-block:56px;}
 .route-row .rline .doodle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;}
 .venue-line{font-size:.82rem;color:var(--ink-soft);margin-bottom:12px;}
 .venue-line b{color:var(--ink);}
-.apply-pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg-soft);border:2px solid var(--line);border-radius:999px;padding:6px 14px 6px 6px;font-size:.78rem;font-weight:700;color:var(--blue);}
+.apply-pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg-soft);border:2px solid var(--line);border-radius:999px;padding:6px 14px 6px 6px;font-size:.78rem;font-weight:700;color:var(--blue);text-decoration:none;}
 .apply-pill .chip{background:var(--ink);color:#fff;font-family:"Space Mono";font-size:.58rem;font-weight:700;padding:3px 7px;border-radius:6px;letter-spacing:.05em;}
 .qr{margin-top:auto;}
 .qr svg{width:64px;height:64px;}
